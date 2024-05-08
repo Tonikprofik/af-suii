@@ -27,16 +27,18 @@
     <a-camera position="0 1.6 -2"></a-camera>
 
     <!-- hands -->
-    <a-entity id="rightHand" oculus-touch-controls="hand: right" raycaster="objects: .grabbable; showLine: true"
+    <!-- <a-entity id="rightHand" oculus-touch-controls="hand: right" raycaster="objects: .grabbable; showLine: true"
       line="color: red; opacity: 0.5">
     </a-entity>
     <a-entity id="leftHand" oculus-touch-controls="hand: left" raycaster="objects: .grabbable; showLine: true"
       line="color: blue; opacity: 0.5">
+    </a-entity> -->
+
+    <a-entity hand-tracking-controls="hand: right" raycaster="objects: .interactive; far: 10; showLine: true" line="color: red; opacity: 1; width: 2">
     </a-entity>
-
-    <a-entity hand-tracking-controls="hand: left" raycaster="objects: .interactable; showLine: true"></a-entity>
-    <a-entity hand-tracking-controls="hand: right" raycaster="objects: .interactable; showLine: true"></a-entity>
-
+    <a-entity hand-tracking-controls="hand: left" raycaster="objects: .interactive; far: 10; showLine: true" line="color: blue; opacity: 1; width: 2">
+    </a-entity>
+    
 
     <!-- Sky -->
     <a-sky src="#starrySky"></a-sky>
@@ -55,11 +57,11 @@
       material="src: #woodTexture; repeat: 1 1; transparent: true; alphaTest: 0.5"></a-cylinder>
 
     <!-- Sand and marbles -->
-    <a-box position="0 1.25 -1" rotation="0 0 0" width="1.5" height="0.05" depth="1"
+    <a-box position="0 1 -0.5" rotation="0 0 0" width="1.5" height="0.05" depth="1"
       material="src: #sandTexture"></a-box>
     <a-entity position="0 1.35 -1">
       <!-- Marble that can be pinched to rotate the table -->
-      <a-sphere id="rotatable-marble" position="0 1 0.2" radius="0.05" material="color: #EF2D5E"></a-sphere>
+      <a-sphere id="rotatable-marble" class="interactive" position="0 0.5 0" radius="0.05" material="color: #EF2D5E"></a-sphere>
       <a-sphere position="0.50 0 0" radius="0.05" material="src: #marbleTexture"></a-sphere>
       <a-sphere position="0.25 0 0" radius="0.05" material="src: #marbleTexture"></a-sphere>
       <a-sphere position="-0.25 0 0" radius="0.05" material="src: #marbleTexture"></a-sphere>
