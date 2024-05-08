@@ -22,9 +22,9 @@
     <a-camera position="0 1.6 -2"></a-camera>
 
     <!-- Hand tracking controls -->
-    <a-entity hand-tracking-grab-controls="hand: left handModelStyle: lowPoly; color: #ffcccc" id="leftHand"
+    <a-entity hand-tracking-grab-controls="hand: left hoverEnabled: true hove handModelStyle: lowPoly; color: #ffcccc" id="leftHand"
       raycaster="objects: .interactive; far: 10; showLine: true" line="color: blue; opacity: 1; width: 2"></a-entity>
-    <a-entity hand-tracking-grab-controls="hand: right" id="rightHand handModelStyle: lowPoly"
+    <a-entity hand-tracking-grab-controls="hand: right hoverEnabled: true" id="rightHand handModelStyle: lowPoly"
       raycaster="objects: .interactive; far: 10; showLine: true" line="color: red; opacity: 1; width: 2"></a-entity>
 
     <!-- Debug Info Panel -->
