@@ -7,6 +7,19 @@ document.addEventListener('DOMContentLoaded', () => {
     let debugEl = document.querySelector('#debug-info');
     debugEl.setAttribute('text', 'value', text);
   }
+  // hand gestures debug
+  [leftHand, rightHand].forEach(hand => {
+    hand.addEventListener('gripdown', () => updateDebugInfo('Grip down detected'));
+    hand.addEventListener('gripup', () => updateDebugInfo('Grip up detected'));
+    hand.addEventListener('pointdown', () => updateDebugInfo('Point down detected'));
+    hand.addEventListener('pointup', () => updateDebugInfo('Point up detected'));
+    hand.addEventListener('thumbup', () => updateDebugInfo('Thumb up detected'));
+    hand.addEventListener('thumbdown', () => updateDebugInfo('Thumb down detected'));
+    hand.addEventListener('pointingstart', () => updateDebugInfo('Pointing start detected'));
+    hand.addEventListener('pointingend', () => updateDebugInfo('Pointing end detected'));
+    hand.addEventListener('pistolstart', () => updateDebugInfo('Pistol start detected'));
+    hand.addEventListener('pistolend', () => updateDebugInfo('Pistol end detected'));
+  });
 
   // Component to handle grabbing objects
   AFRAME.registerComponent('grab', {
