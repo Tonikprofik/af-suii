@@ -38,7 +38,9 @@
     </a-entity>
     <a-entity hand-tracking-controls="hand: left" raycaster="objects: .interactive; far: 10; showLine: true" line="color: blue; opacity: 1; width: 2">
     </a-entity>
-    
+
+    <!-- <a-entity id="leftHand" hand-tracking-grab-controls="hand: left;" raycaster="objects: .interactive;></a-entity>
+    <a-entity id="rightHand" hand-tracking-grab-controls="hand: right;" raycaster="objects: .interactive;></a-entity> -->
 
     <!-- Sky -->
     <a-sky src="#starrySky"></a-sky>
@@ -61,7 +63,8 @@
       material="src: #sandTexture"></a-box>
     <a-entity position="0 1.35 -1">
       <!-- Marble that can be pinched to rotate the table -->
-      <a-sphere id="rotatable-marble" class="interactive" position="0 0.2 0" radius="0.1" material="color: #EF2D5E"></a-sphere>
+      <a-sphere id="rotatable-marble" grabable class="interactive" position="0 0.2 0" radius="0.1"
+        material="color: #EF2D5E"></a-sphere>
       <a-sphere position="0.50 0 0" radius="0.05" material="src: #marbleTexture"></a-sphere>
       <a-sphere position="0.25 0 0" radius="0.05" material="src: #marbleTexture"></a-sphere>
       <a-sphere position="-0.25 0 0" radius="0.05" material="src: #marbleTexture"></a-sphere>
