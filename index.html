@@ -7,7 +7,7 @@
   <title>VR Scene</title>
   <!-- Include A-Frame via CDN -->
   <script src="https://aframe.io/releases/1.4.0/aframe.min.js"></script>
-
+  <script src="https://cdn.jsdelivr.net/npm/handy-controls/build/handy-controls.min.js"></script>
   <!-- <script src="https://unpkg.com/aframe-extras/dist/aframe-extras.min.js"></script> -->
   <!-- <script src="https://unpkg.com/aframe-hand-tracking-controls/dist/aframe-hand-tracking-controls.min.js"></script> -->
   <!-- For hand tracking -->
@@ -27,31 +27,39 @@
     <!-- camera -->
     <a-camera position="0 1.6 -2"></a-camera>
 
-    <!-- hands -->
-    <!-- <a-entity id="rightHand" oculus-touch-controls="hand: right" raycaster="objects: .grabbable; showLine: true"
-      line="color: red; opacity: 0.5">
-    </a-entity>
-    <a-entity id="leftHand" oculus-touch-controls="hand: left" raycaster="objects: .grabbable; showLine: true"
-      line="color: blue; opacity: 0.5">
-    </a-entity> -->
+    <a-entity hand-controls="hand: left" id="leftHand"></a-entity>
+    <a-entity hand-controls="hand: right" id="rightHand"></a-entity>
+    <a-box grab follow-hand="leftHand" rotate-with-hand="leftHand"></a-box>
 
-    <a-entity hand-tracking-controls="hand: right" raycaster="objects: .interactive; far: 10; showLine: true" line="color: red; opacity: 1; width: 2"></a-entity>
-  <a-entity hand-tracking-controls="hand: left" raycaster="objects: .interactive; far: 10; showLine: true" line="color: blue; opacity: 1; width: 2"></a-entity>
 
-  <!-- Sky and environment -->
-  <a-sky src="#starrySky"></a-sky>
-  <a-entity geometry="primitive: plane; height: 50; width: 50" material="src: #auroraTexture; side: double; transparent: true; opacity: 0.8" position="0 5 -10" rotation="0 0 0"></a-entity>
+    <a-entity id="rightHand" hand-tracking-controls="hand: right"
+      raycaster="objects: .interactive; far: 10; showLine: true" line="color: red; opacity: 1; width: 2"></a-entity>
+    <a-entity hand-tracking-controls="hand: left" raycaster="objects: .interactive; far: 10; showLine: true"
+      line="color: blue; opacity: 1; width: 2"></a-entity>
 
-  <!-- Interactive objects and scene setup -->
-  <a-cylinder id="rotatable-table" position="0 0.75 -1" radius="1" height="1" rotation="0 0 0" material="src: #woodTexture; repeat: 1 1; transparent: true; alphaTest: 0.5"></a-cylinder>
-  <!-- Sand -->
-  <a-box position="0 1.1 -0.5" rotation="0 0 0" width="1.5" height="0.05" depth="1" material="src: #sandTexture"></a-box>
-  <a-entity position="0 1.35 -1">
-    <a-sphere id="rotatable-marble" class="interactive" position="0 0.2 0" radius="0.1" material="color: #EF2D5E"></a-sphere>
-      <a-sphere position="0.50 0 0" radius="0.05" material="src: #marbleTexture"></a-sphere>
-      <a-sphere position="0.25 0 0" radius="0.05" material="src: #marbleTexture"></a-sphere>
-      <a-sphere position="-0.25 0 0" radius="0.05" material="src: #marbleTexture"></a-sphere>
-      <a-sphere position="-0.50 0 0" radius="0.05" material="src: #marbleTexture"></a-sphere>
+    <!-- Debug Info Panel -->
+    <a-entity id="debug-info" position="-1 2 -3" geometry="primitive: plane; width: 2; height: 1;"
+      material="color: #FFF; opacity: 0.8;" text="value: Debug Info; align: center; color: black;"></a-entity>
+
+    <!-- Sky and environment -->
+    <a-sky src="#starrySky"></a-sky>
+    <a-entity geometry="primitive: plane; height: 50; width: 50"
+      material="src: #auroraTexture; side: double; transparent: true; opacity: 0.8" position="0 5 -10"
+      rotation="0 0 0"></a-entity>
+
+    <!-- Interactive objects and scene setup -->
+    <a-cylinder id="rotatable-table" position="0 0.75 -1" radius="1" height="1" rotation="0 0 0"
+      material="src: #woodTexture; repeat: 1 1; transparent: true; alphaTest: 0.5"></a-cylinder>
+    <!-- Sand -->
+    <a-box position="0 1.1 -0.5" rotation="0 0 0" width="1.5" height="0.05" depth="1"
+      material="src: #sandTexture"></a-box>
+    <a-entity position="0 1.35 -1">
+      <a-sphere id="rotatable-marble" class="interactive" position="0 0.2 0" radius="0.1"
+        material="color: #EF2D5E"></a-sphere>
+      <a-sphere class="interactive" position="0.50 0 0" radius="0.05" material="src: #marbleTexture"></a-sphere>
+      <a-sphere class="interactive" position="0.25 0 0" radius="0.05" material="src: #marbleTexture"></a-sphere>
+      <a-sphere class="interactive" position="-0.25 0 0" radius="0.05" material="src: #marbleTexture"></a-sphere>
+      <a-sphere class="interactive" position="-0.50 0 0" radius="0.05" material="src: #marbleTexture"></a-sphere>
     </a-entity>
     <!-- Add more marbles as needed -->
   </a-scene>
