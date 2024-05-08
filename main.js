@@ -1,78 +1,33 @@
-/* jshint esversion: 9 */
-/* global THREE, AFRAME */
-
 document.addEventListener('DOMContentLoaded', () => {
-  // Setup debug info updater
+  const leftHand = document.querySelector('#leftHand');
+  const rightHand = document.querySelector('#rightHand');
+  const debugInfo = document.querySelector('#debug-info');
+
   function updateDebugInfo(text) {
-    let debugEl = document.querySelector('#debug-info');
-    debugEl.setAttribute('text', 'value', text);
+    debugInfo.setAttribute('text', 'value', text);
   }
-  // hand gestures debug
+
+  // Adding event listeners for hand gestures to both hands
   [leftHand, rightHand].forEach(hand => {
-    hand.addEventListener('gripdown', () => updateDebugInfo('Grip down detected'));
-    hand.addEventListener('gripup', () => updateDebugInfo('Grip up detected'));
-    hand.addEventListener('pointdown', () => updateDebugInfo('Point down detected'));
-    hand.addEventListener('pointup', () => updateDebugInfo('Point up detected'));
-    hand.addEventListener('thumbup', () => updateDebugInfo('Thumb up detected'));
-    hand.addEventListener('thumbdown', () => updateDebugInfo('Thumb down detected'));
-    hand.addEventListener('pointingstart', () => updateDebugInfo('Pointing start detected'));
-    hand.addEventListener('pointingend', () => updateDebugInfo('Pointing end detected'));
-    hand.addEventListener('pistolstart', () => updateDebugInfo('Pistol start detected'));
-    hand.addEventListener('pistolend', () => updateDebugInfo('Pistol end detected'));
+    ['gripdown', 'gripup', 'pointdown', 'pointup', 'thumbup', 'thumbdown', 'pointingstart', 'pointingend', 'pistolstart', 'pistolend'].forEach(event => {
+      hand.addEventListener(event, () => updateDebugInfo(`${event} detected`));
+    });
   });
 
-  // Component to handle grabbing objects
-  AFRAME.registerComponent('grab', {
+  // Example of a component that uses these events
+  AFRAME.registerComponent('interaction', {
     init: function() {
-      this.el.addEventListener('gripdown', e => this.handleGrabStart(e));
-      this.el.addEventListener('gripup', e => this.handleGrabEnd(e));
+      this.el.addEventListener('gripdown', () => this.handleInteraction('Grip Down'));
+      this.el.addEventListener('pointup', () => this.handleInteraction('Point Up'));
     },
-    handleGrabStart: function(event) {
-      const hand = event.detail.hand;
-      this.grabbedEl = this.el;
-      hand.setAttribute('grabbing', this.grabbedEl);
-      updateDebugInfo(`Grabbing: ${this.el.id} at position ${this.el.getAttribute('position').toString()}`);
-    },
-    handleGrabEnd: function(event) {
-      const hand = event.detail.hand;
-      hand.removeAttribute('grabbing');
-      this.grabbedEl = null;
-      updateDebugInfo('Released grab');
+    handleInteraction: function(action) {
+      updateDebugInfo(`${action} on ${this.el.id}`);
+      // Additional interaction logic here
     }
   });
 
-  // Component to follow hand movements
-  AFRAME.registerComponent('follow-hand', {
-    schema: { type: 'selector' },
-    tick: function () {
-      if (!this.data) return;
-      const handPosition = this.data.object3D.position;
-      this.el.setAttribute('position', handPosition);
-      updateDebugInfo(`Following hand: Current Position - ${handPosition.toString()}`);
-    }
-  });
-
-  // Component to enable object rotation based on hand movement
-  AFRAME.registerComponent('rotate-with-hand', {
-    schema: { type: 'selector' },
-    init: function() {
-      this.previousHandRotation = new THREE.Vector3();
-    },
-    tick: function () {
-      if (!this.data) return;
-      const currentHandRotation = this.data.object3D.rotation;
-      const deltaRotation = this.previousHandRotation.sub(currentHandRotation);
-      this.el.object3D.rotation.y += deltaRotation.y;
-      this.previousHandRotation.copy(currentHandRotation);
-      updateDebugInfo(`Rotating: ${this.el.id} - New Rotation Y: ${this.el.object3D.rotation.y.toFixed(2)}`);
-    }
-  });
-
-  // Initialize scene and hand controls
-  const sceneEl = document.querySelector('a-scene');
-  const hands = sceneEl.querySelectorAll('[hand-controls]');
-  hands.forEach(hand => {
-    hand.setAttribute('grab', '');
-    hand.setAttribute('follow-hand', {type: hand.id}); // Assuming each hand has a unique ID
+  // Apply interaction component to interactive objects
+  document.querySelectorAll('.interactive').forEach(obj => {
+    obj.setAttribute('interaction', '');
   });
 });
