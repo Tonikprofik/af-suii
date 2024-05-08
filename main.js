@@ -1,31 +1,36 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const hand = document.querySelector('[hand-tracking-controls]');
-  const marble = document.getElementById('rotatable-marble');
-  const table = document.getElementById('rotatable-table');
+  const hands = document.querySelectorAll('[hand-tracking-controls]');
+  let activeObject = null;
 
-  let isPinching = false;
-  let lastHandRotation = null;
+  hands.forEach(hand => {
+    hand.addEventListener('raycaster-intersected', evt => {
+      activeObject = evt.detail.intersectedEl;  // store the currently intersected element
+    });
 
-  hand.addEventListener('pinchstarted', evt => {
-    isPinching = true;
-    lastHandRotation = hand.object3D.rotation.y;
-  });
+    hand.addEventListener('raycaster-intersected-cleared', evt => {
+      activeObject = null;  // clear the active object when it's no longer intersected
+    });
 
-  hand.addEventListener('pinchended', evt => {
-    isPinching = false;
-  });
+    hand.addEventListener('pinchstarted', evt => {
+      if (activeObject && activeObject.id === 'rotatable-marble') {
+        hand.setAttribute('grabbing', true);  // Start grabbing or interacting
+      }
+    });
 
-  hand.addEventListener('tick', () => {
-    if (isPinching) {
-      let currentRotation = hand.object3D.rotation.y;
-      let rotationDelta = currentRotation - lastHandRotation;
-      let tableRotation = table.getAttribute('rotation');
+    hand.addEventListener('pinchended', evt => {
+      hand.setAttribute('grabbing', false);  // End grabbing or interacting
+    });
 
-      // Rotate the table based on the change in the hand's rotation
-      tableRotation.y += rotationDelta * (180 / Math.PI); // Convert radians to degrees
-      table.setAttribute('rotation', tableRotation);
-
-      lastHandRotation = currentRotation;
-    }
+    hand.addEventListener('tick', () => {
+      if (hand.getAttribute('grabbing') && activeObject) {
+        let handRotation = hand.object3D.rotation.y;
+        let table = document.getElementById('rotatable-table');
+        let tableRotation = table.getAttribute('rotation');
+        
+        // Simple rotation logic: Rotate table as hand rotates
+        tableRotation.y = handRotation * (180 / Math.PI);  // Convert radians to degrees
+        table.setAttribute('rotation', tableRotation);
+      }
+    });
   });
 });
