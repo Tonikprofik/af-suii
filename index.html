@@ -22,8 +22,9 @@
     <a-camera position="0 1.6 -2"></a-camera>
 
     <!-- Hand tracking controls -->
-    <a-entity hand-tracking-grab-controls="hand: left hoverEnabled: true hove handModelStyle: lowPoly; color: #ffcccc" id="leftHand"
-      raycaster="objects: .interactive; far: 10; showLine: true" line="color: blue; opacity: 1; width: 2"></a-entity>
+    <a-entity hand-tracking-grab-controls="hand: left hoverEnabled: true hove handModelStyle: lowPoly; color: #ffcccc"
+      id="leftHand" raycaster="objects: .interactive; far: 10; showLine: true"
+      line="color: blue; opacity: 1; width: 2"></a-entity>
     <a-entity hand-tracking-grab-controls="hand: right hoverEnabled: true" id="rightHand handModelStyle: lowPoly"
       raycaster="objects: .interactive; far: 10; showLine: true" line="color: red; opacity: 1; width: 2"></a-entity>
 
@@ -38,23 +39,18 @@
       rotation="0 0 0"></a-entity>
 
     <!-- Interactive objects and scene setup -->
-    <a-cylinder id="rotatable-table" grabbable follow-hand="leftHand" rotate-with-hand="leftHand" position="0 0.75 -1"
-      radius="1" height="1" rotation="0 0 0"
+    <a-cylinder id="rotatable-table" class="interactive" position="0 0.75 -1" radius="1" height="1" rotation="0 0 0"
       material="src: #woodTexture; repeat: 1 1; transparent: true; alphaTest: 0.5"></a-cylinder>
-    <!-- Sand -->
-    <a-box position="0 1.1 -0.5" rotation="0 0 0" width="1.5" height="0.05" depth="1"
-      material="src: #sandTexture"></a-box>
-    <!-- Marbles -->
-    <a-entity class="interactive" grabbable follow-hand="rightHand" rotate-with-hand="rightHand" position="0 1.35 -1">
-      <a-sphere id="rotatable-marble" class="interactive" grabbable follow-hand="rightHand" rotate-with-hand="rightHand"
-        position="0 0.2 0" radius="0.1" material="color: #EF2D5E"></a-sphere>
-
-      <a-sphere class="interactive" position="0.50 0 0" radius="0.05" material="src: #marbleTexture"></a-sphere>
-      <a-sphere class="interactive" position="0.25 0 0" radius="0.05" material="src: #marbleTexture"></a-sphere>
-      <a-sphere class="interactive" position="-0.25 0 0" radius="0.05" material="src: #marbleTexture"></a-sphere>
-      <a-sphere class="interactive" position="-0.50 0 0" radius="0.05" material="src: #marbleTexture"></a-sphere>
-    </a-entity>
-    <!-- Add more marbles as needed -->
+    <a-box position="0 1.1 -0.5" rotation="0 0 0" width="1.5" height="0.05" depth="1" material="src: #sandTexture"
+      class="interactive"></a-box>
+    <a-entity position="0 1.35 -1">
+      <a-sphere id="rotatable-marble" position="0 0.2 0" radius="0.1" material="color: #EF2D5E"
+        class="interactive"></a-sphere>
+      <a-sphere position="0.50 0 0" radius="0.05" material="src: #marbleTexture" class="interactive"></a-sphere>
+      <a-sphere position="0.25 0 0" radius="0.05" material="src: #marbleTexture" class="interactive"></a-sphere>
+      <a-sphere position="-0.25 0 0" radius="0.05" material="src: #marbleTexture" class="interactive"></a-sphere>
+      <a-sphere position="-0.50 0 0" radius="0.05" material="src: #marbleTexture" class="interactive"></a-sphere>
+      <!-- Add more marbles as needed -->
   </a-scene>
 
 </body>
