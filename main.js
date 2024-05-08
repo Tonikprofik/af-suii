@@ -1,32 +1,31 @@
 document.addEventListener('DOMContentLoaded', () => {
-  const scene = document.querySelector('a-scene');
-  if (!scene) return;
+  const hand = document.querySelector('[hand-tracking-controls]');
+  const marble = document.getElementById('rotatable-marble');
+  const table = document.getElementById('rotatable-table');
 
-  const leftHand = document.getElementById('leftHand');
-  const rightHand = document.getElementById('rightHand');
-  let activeObject = null;
+  let isPinching = false;
+  let lastHandRotation = null;
 
-  scene.addEventListener('gripdown', function (evt) {
-    // Determine if the target is an interactable object
-    if (evt.detail.hand === rightHand && evt.target.hasAttribute('data-interactable')) {
-      activeObject = evt.target;
-    }
+  hand.addEventListener('pinchstarted', evt => {
+    isPinching = true;
+    lastHandRotation = hand.object3D.rotation.y;
   });
 
-  rightHand.addEventListener('axismove', function (evt) {
-    if (activeObject) {
-      const position = activeObject.getAttribute('position');
-      // Modify position based on axis movement
-      position.x += evt.detail.axis[2] * 0.05; // X axis
-      position.y += evt.detail.axis[3] * 0.05; // Y axis
-      activeObject.setAttribute('position', position);
-    }
+  hand.addEventListener('pinchended', evt => {
+    isPinching = false;
   });
 
-  scene.addEventListener('gripup', function (evt) {
-    // Release the object
-    if (evt.detail.hand === rightHand && activeObject) {
-      activeObject = null;
+  hand.addEventListener('tick', () => {
+    if (isPinching) {
+      let currentRotation = hand.object3D.rotation.y;
+      let rotationDelta = currentRotation - lastHandRotation;
+      let tableRotation = table.getAttribute('rotation');
+
+      // Rotate the table based on the change in the hand's rotation
+      tableRotation.y += rotationDelta * (180 / Math.PI); // Convert radians to degrees
+      table.setAttribute('rotation', tableRotation);
+
+      lastHandRotation = currentRotation;
     }
   });
 });
