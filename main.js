@@ -12,17 +12,20 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     hand.addEventListener('pinchstarted', evt => {
+      console.log('pinchstarted')
       if (activeObject && activeObject.id === 'rotatable-marble') {
         hand.setAttribute('grabbing', true);  // Start grabbing or interacting
       }
     });
 
     hand.addEventListener('pinchended', evt => {
+      console.log('pinchended')
       hand.setAttribute('grabbing', false);  // End grabbing or interacting
     });
 
     hand.addEventListener('tick', () => {
       if (hand.getAttribute('grabbing') && activeObject) {
+        console.log('grabbing')
         let handRotation = hand.object3D.rotation.y;
         let table = document.getElementById('rotatable-table');
         let tableRotation = table.getAttribute('rotation');
