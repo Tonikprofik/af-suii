@@ -18,4 +18,17 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     hand.addEventListener('pinchended', evt => {
-      hand.setAttribute('grabbing', false);  // End grabbing
+      hand.setAttribute('grabbing', false);  // End grabbing or interacting
+    });
+
+    hand.addEventListener('tick', () => {
+      if (hand.getAttribute('grabbing') && activeObject) {
+        let handRotation = hand.object3D.rotation.y;
+        let table = document.getElementById('rotatable-table');
+        let tableRotation = table.getAttribute('rotation');
+        tableRotation.y = handRotation * (180 / Math.PI);  // Convert radians to degrees and rotate table
+        table.setAttribute('rotation', tableRotation);
+      }
+    });
+  });
+});
